@@ -36,13 +36,26 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
             text-transform: uppercase;
             color: white;
-            animation: fadeIn 2s ease-in-out 1s;
-            transition: transform 0.3s ease-in-out;
+            transform: scale(0); /* Nascondi l'h3 inizialmente */
+            opacity: 0;
+            animation: fadeInScale 2s ease-in-out forwards 1s; /* Animazione di comparsa con ingrandimento */
         }
 
         h3:hover {
-            transform: scale(1.1); /* ingrandisci un po' al passaggio del mouse */
+            transform: scale(1.1); /* Ingrandisci un po' al passaggio del mouse */
         }
+
+        @keyframes fadeInScale {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
 
         @keyframes fadeIn {
             0% {
