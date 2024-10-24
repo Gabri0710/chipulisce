@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi minchia deve pulire???</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #141E30, #243B55); /* sfondo epico */
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            color: #ff0033;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        h3 {
+            font-size: 2.5rem;
+            background: #ff0033;
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            text-transform: uppercase;
+            color: white;
+            animation: fadeIn 2s ease-in-out 1s;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        h3:hover {
+            transform: scale(1.1); /* ingrandisci un po' al passaggio del mouse */
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Effetti epici */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 90%; /* Riduci la larghezza al 90% */
+            height: 90%; /* Riduci l'altezza al 90% */
+            background: url('https://media0.giphy.com/media/MC3jH6fgDZy92/giphy.gif') no-repeat center center;
+            background-size: contain; /* Mantiene le proporzioni dell'immagine */
+            opacity: 0.2;
+            z-index: -1;
+            transform: translate(-50%, -50%); /* Centra l'elemento nel corpo */
+        }
+
+
+    </style>
+</head>
+<body>
+    <h1>OGGI PULISCE...</h1>
+    <h3 id="output">Mario</h3> <!-- Puoi aggiornare dinamicamente questo con JS -->
+
+    <script src="script.js"></script>
+</body>
+</html>
