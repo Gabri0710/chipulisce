@@ -1,64 +1,37 @@
-/*
-fetch('nomi.txt') 
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Errore nel caricamento del file');
-        }
-        return response.text();
-    })
-    .then(text => {
-        console.log('Contenuto del file:', text); // Aggiungi questa riga per vedere il contenuto
-        processFile(text);
-    })
-    .catch(error => {
-        console.error('Errore nel caricamento del file:', error);
-        document.getElementById('output').textContent = 'Errore nel caricamento del file.';
-    });
+// Lista di nomi
+const names = ['Gabriele', 'Tommaso', 'Rocco', 'Giovanni', 'COPPIA'];
+let currentIndex = localStorage.getItem('currentIndex') ? parseInt(localStorage.getItem('currentIndex')) : 0;
+let lastCheck = localStorage.getItem('lastCheck') ? new Date(localStorage.getItem('lastCheck')) : null;
 
-function processFile(content) {
-    const lines = content.split('\n'); 
-    let lastXIndex = -1;
-    
-    lines.forEach((line, index) => {
-        const [name, x] = line.trim().split(' '); 
-        if (x === 'x') {
-            lastXIndex = index; 
-        }
-    });
-
-    const nextName = lastXIndex >= 0 && lastXIndex < lines.length - 1
-        ? lines[lastXIndex + 1].trim().split(' ')[0]
-        : 'Nessun nome disponibile dopo l\'ultima "x".';
-
-    document.getElementById('output').textContent = `Nome dopo l'ultima "x": ${nextName}`;
+// Funzione per visualizzare il nome corrente
+function displayCurrentName() {
+    const nameToShow = names[currentIndex];
+    document.getElementById('output').textContent = nameToShow; // Mostra solo il nome, senza la "x"
 }
-*/
 
-// Contenuto del file nomi.txt incorporato direttamente
-const fileContent = `
-Gabriele x
-Tommaso
-Rocco
-Giovanni
-`;
+// Funzione per controllare se è passato un minuto e aggiornare il nome
+function checkForNextMinute() {
+    const now = new Date();
+    const nextMinute = new Date(lastCheck ? lastCheck.getTime() + 60000 : now.getTime()); // Aggiungi 1 minuto (60000 ms)
 
-processFile(fileContent);
-
-function processFile(content) {
-    const lines = content.trim().split('\n'); // Dividi il file in linee
-    let lastXIndex = -1;
-    
-    lines.forEach((line, index) => {
-        const [name, x] = line.trim().split(' '); // Supponendo che "x" sia separato da uno spazio
-        if (x === 'x') {
-            lastXIndex = index; 
-        }
-    });
-
-    const nextName = lastXIndex >= 0 && lastXIndex < lines.length - 1
-        ? lines[lastXIndex + 1].trim().split(' ')[0]
-        : 'Nessun nome disponibile dopo l\'ultima "x".';
-
-    // Mostra il risultato nell'elemento output
-    document.getElementById('output').textContent = `${nextName}`;
+    // Controllo se è passato un minuto dall'ultimo aggiornamento
+    if (!lastCheck || now >= nextMinute) {
+        changeName();  // Passa al nome successivo
+        lastCheck = now;
+        localStorage.setItem('lastCheck', lastCheck.toString());
+    }
 }
+
+// Funzione per cambiare al nome successivo
+function changeName() {
+    currentIndex = (currentIndex + 1) % names.length; // Passa al nome successivo
+    localStorage.setItem('currentIndex', currentIndex.toString());
+    displayCurrentName();
+}
+
+// Mostra il nome corrente al caricamento della pagina
+window.onload = function() {
+    displayCurrentName();
+    // Controlla ogni 5 secondi per vedere se è passato un minuto
+    setInterval(checkForNextMinute, 5000);
+};
